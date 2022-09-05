@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+    <title>用户登录注册页面</title>
+    <link rel="stylesheet" href="../css/test.css">
+    <meta charset="UTF-8">
+    <!--edge浏览器H5兼容设置-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--360浏览器H5兼容设置-->
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--导入核心文件-->
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+</head>
+<!--/************************************************************
+ *																*
+ * 						      代码库							*
+ *                        www.dmaku.com							*
+ *       		  努力创建完善、持续更新插件以及模板			*
+ * 																*
+**************************************************************-->
+<body>
+<div class="login-page">
+    <div class="form">
+        <form class="register-form" style="display: none;" id="regFrom">
+            <input type="text" placeholder="用户名" name="username">
+            <input type="password" placeholder="密码" name="password">
+            <input type="password" placeholder="再此输入密码" >
+            <button onclick="regActive()">注册</button>
+            <p class="message">已有账号? <a href="javascript:" onclick="login()">立即登录</a></p>
+        </form>
+        <form class="login-form" style="display:block;" id="loginFrom">
+            <input value="文水黑斌" placeholder="用户名">
+            <input type="password" placeholder="密码">
+            <button onclick="loginActive()">登录</button>
+            <p class="message">还没有账号？<a href="javascript:" onclick="reg()">立即注册</a></p>
+        </form>
+    </div>
+</div>
+<script>
+
+    function login(){
+        document.getElementById("regFrom").style.display = "none";
+        document.getElementById("loginFrom").style.display = "block";
+    }
+    function reg(){
+        document.getElementById("regFrom").style.display = "block";
+        document.getElementById("loginFrom").style.display = "none";
+    }
+    function loginActive(){
+        alert("文水黑斌让你先注册")
+    }
+    function regActive(){
+        $.ajax({
+            url: "/users/reg",
+            type: "POST",
+            data: $("#regFrom").serialize(),
+            dataType: "json",
+            success: function(json) {
+                if (json.state == 200) {
+                    alert("注册成功！");
+                    location.href = "test.html";
+                } else {
+                    alert("注册失败！" + json.message);
+                    location.href = "test.html";
+                }
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>

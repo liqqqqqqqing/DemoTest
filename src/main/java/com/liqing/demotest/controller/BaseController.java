@@ -46,6 +46,9 @@ public class BaseController {
         }else if (e instanceof PasswordNotMatchException){
             result.setState(4002);
             result.setMessage("用户名或密码错误");
+        }else if (e instanceof UserNullException){
+            result.setState(3999);
+            result.setMessage("用户名和密码不能为空");
         }
         return result;
     }

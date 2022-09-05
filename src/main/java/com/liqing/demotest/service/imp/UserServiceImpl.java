@@ -3,10 +3,7 @@ package com.liqing.demotest.service.imp;
 import com.liqing.demotest.entity.User;
 import com.liqing.demotest.mapper.UserMapper;
 import com.liqing.demotest.service.IUserService;
-import com.liqing.demotest.service.ex.InsertException;
-import com.liqing.demotest.service.ex.PasswordNotMatchException;
-import com.liqing.demotest.service.ex.UserNotFoundException;
-import com.liqing.demotest.service.ex.UsernameDuplicateException;
+import com.liqing.demotest.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -28,6 +25,11 @@ public class UserServiceImpl implements IUserService {
     public void reg(User user) {
         // 根据参数user对象获取注册的用户名
         String username = user.getUsername();
+        String password = user.getPassword();
+        if(username==""||password==""){
+            //用户的注册的用户名或密码为空
+            throw new UserNullException("用户名、密码不能为空");
+        }
         // 调用持久层的User findByUsername(String username)方法，根据用户名查询用户数据
         User result = userMapper.findByUsername(username);
         // 判断查询结果是否不为null
