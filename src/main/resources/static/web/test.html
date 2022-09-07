@@ -32,8 +32,8 @@
             <p class="message">已有账号? <a href="javascript:" onclick="login()">立即登录</a></p>
         </form>
         <form class="login-form" style="display:block;" id="loginFrom">
-            <input value="文水黑斌" placeholder="用户名">
-            <input type="password" placeholder="密码">
+            <input placeholder="用户名" name="username" type="text">
+            <input type="password" placeholder="密码" name="password">
             <button onclick="loginActive()">登录</button>
             <p class="message">还没有账号？<a href="javascript:" onclick="reg()">立即注册</a></p>
         </form>
@@ -50,7 +50,24 @@
         document.getElementById("loginFrom").style.display = "none";
     }
     function loginActive(){
-        alert("文水黑斌让你先注册")
+        $.ajax({
+            url: "/users/login",
+            type: "POST",
+            data: $("#loginFrom").serialize(),
+            dataType: "json",
+            success: function(json) {
+                if (json.state == 200) {
+                    alert("登录成功！")
+                    location.href = "index.html";
+                    // $.cookie("avatar", json.data.avatar, {expires: 7});
+                    // console.log("cookie中的avatar=" + $.cookie("avatar"));
+                    // location.href = "index.html";
+                } else {
+                    alert("登录失败！" + json.message);
+                    location.href = "test.html";
+                }
+            }
+        });
     }
     function regActive(){
         $.ajax({
@@ -61,14 +78,13 @@
             success: function(json) {
                 if (json.state == 200) {
                     alert("注册成功！");
-                    location.href = "test.html";
+                    // location.href = "test.html";
                 } else {
                     alert("注册失败！" + json.message);
                     location.href = "test.html";
                 }
             }
         });
-
     }
 
 </script>

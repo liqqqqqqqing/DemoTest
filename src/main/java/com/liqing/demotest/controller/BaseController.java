@@ -2,6 +2,7 @@ package com.liqing.demotest.controller;
 
 import com.liqing.demotest.service.ex.*;
 import com.liqing.demotest.until.JsonResult;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,7 +18,7 @@ public class BaseController {
      * @param session HttpSession对象
      * @return 当前登录的用户的id
      */
-    protected final Integer getUidFromSession(HttpSession session) {
+    protected final Integer getUidFromSession(@NotNull HttpSession session) {
         return Integer.valueOf(session.getAttribute("uid").toString());
     }
 
@@ -49,8 +50,9 @@ public class BaseController {
         }else if (e instanceof UserNullException){
             result.setState(3999);
             result.setMessage("用户名和密码不能为空");
+        }else if (e instanceof UpdateException){
+            result.setState(5001);
         }
         return result;
     }
-
 }
