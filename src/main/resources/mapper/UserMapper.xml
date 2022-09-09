@@ -61,4 +61,21 @@
         WHERE
         uid = #{uid}
     </update>
+
+    <!-- 根据uid更新用户的头像
+	     Integer updateAvatarByUid(
+		    @Param("uid") Integer uid,
+		    @Param("avatar") String avatar,
+		    @Param("modifiedUser") String modifiedUser,
+		    @Param("modifiedTime") Date modifiedTime) -->
+    <update id="updateAvatarByUid">
+        UPDATE
+            t_user
+        SET
+            avatar = #{avatar},
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        WHERE
+            uid = #{uid}
+    </update>
 </mapper>
